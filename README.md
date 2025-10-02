@@ -1,56 +1,43 @@
-# Breast Cancer Classification with SVM
+<div style="text-align: center; margin-bottom: 20px;">
+  <h1>Breast Cancer Classification using SVM & Feature Selection</h1>
+</div>
 
-## Project Overview
-This project performs binary classification of breast cancer tumors (malignant vs benign) using Support Vector Machines (SVM). It uses the Breast Cancer Wisconsin dataset from Kaggle and covers comprehensive data science steps from exploratory data analysis to model tuning and evaluation.
+- Loaded the Breast Cancer dataset (569 samples with 32 features), containing numeric data including mean, standard error, and worst values of cell nucleus characteristics such as radius, texture, perimeter, area, smoothness, compactness, concavity, concave points, symmetry, and fractal dimension.
 
-## Dataset
-The Breast Cancer Wisconsin (Diagnostic) dataset consists of 569 samples described by 30 numeric features computed from digitized images of fine needle aspirate (FNA) of breast masses.
+- Performed initial exploratory data analysis (EDA):
+  - Checked data structure and null/missing values.
+  - Statistical summary with `.describe()` of features.
+  - Visualized class distribution of diagnosis (Benign vs Malignant).
 
-## Project Steps
+- Feature selection was done using a Random Forest Classifier to rank the importance of variables.
+  - Top features selected include `concave points worst`, `concave points mean`, `concavity mean`, `radius mean`, `concavity worst`, among others.
+  - Selected these top features for downstream modeling.
 
-1. **Data Loading and Inspection**
-   - Imported dataset and inspected structure, missing values, and statistics.
-   
-2. **Exploratory Data Analysis (EDA)**
-   - Visualized diagnosis distribution and tumor feature distributions.
-   - Detected outliers using boxplots.
-   
-3. **Data Cleaning**
-   - Handled outliers by clipping extreme values using the IQR method.
-   - Removed highly correlated features to reduce multicollinearity.
-   
-4. **Feature Engineering**
-   - Encoded target diagnosis column into binary format (M=1, B=0).
-   - Evaluated feature importance with Random Forest and selected the top features.
-   - Performed dimensionality reduction with PCA for visualization.
-   
-5. **Preprocessing**
-   - Applied feature scaling (StandardScaler) to numeric features.
-   - Split the data into training and testing sets in a stratified manner.
-   
-6. **Model Building and Evaluation**
-   - Trained SVM classifiers with linear and RBF kernels.
-   - Evaluated classification performance using accuracy, precision, recall, F1-score, and confusion matrices.
-   - Tuned hyperparameters (C and gamma) via grid search and cross-validation.
-   - Visualized SVM decision boundaries on 2D projections.
-   
-7. **Cross-Validation**
-   - Performed 5-fold cross-validation to estimate the model’s generalization performance.
+- Data preprocessing involved scaling features using `StandardScaler` to normalize the feature ranges.
 
-## Technologies and Libraries
-- Python 3.x
-- Pandas, NumPy for data manipulation
-- Matplotlib, Seaborn for visualization
-- Scikit-learn for modeling and evaluation
+- Splitting data:
+  - The dataset was split into 80% training and 20% test sets maintaining the diagnosis ratio for stratification.
 
-## Usage
-- Clone repository.
-- Install required dependencies.
-- Follow the notebooks or scripts to run the analysis and model training steps.
+- Implemented Support Vector Machine (SVM) classification:
+  - Trained baseline Linear SVM and RBF Kernel SVM.
+  - Evaluated models on test set using classification reports and confusion matrices.
 
-## Author
-- [Your Name or GitHub handle]
+- Hyperparameter tuning for RBF SVM was performed using GridSearchCV with different values of `C` and `gamma` to optimize model performance.
+  - Best parameters found were approximately `C=10` and `gamma=0.01`.
+  - The tuned RBF SVM showed improved metrics with accuracy around 97%.
 
----
+- Employed 5-fold cross-validation to confirm model robustness with mean accuracy near 96.8%.
 
-This project demonstrates a practical data science workflow for medical data classification problems using SVMs with end-to-end processing, visualization, and tuning.
+- Visualized SVM decision boundaries on the first two principal components for interpretability.
+
+- Optional PCA was applied to visualize the data distribution and class separability in 2D space.
+
+- Overall, SVM with tuned RBF kernel effectively classifies breast cancer data, demonstrating high precision, recall, and F1-scores in distinguishing benign and malignant diagnoses.
+
+- Key metrics:
+  - Accuracy: ~97%
+  - High precision and recall for both classes
+  - Confusion matrices show low misclassification
+
+This notebook consolidates data preprocessing, feature selection, model training, tuning, and evaluation for breast cancer classification using SVM, showcasing strong predictive performance on benchmark medical data.
+
